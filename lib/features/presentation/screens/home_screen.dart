@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar(title: 'My Tasks'),
+      appBar: CustomAppbar(title: 'My Tasks', autoLeading: false),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
@@ -23,6 +23,7 @@ class HomeScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 5,
                 itemBuilder: (context, index) {
+                  final taskIndex = _homeController.box.getAt(index);
                   return Container(
                     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                     margin: const EdgeInsets.only(bottom: 16),
@@ -48,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CustomText(
-                                    text: 'Fixing initial style',
+                                    text: taskIndex['title'],
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white,
@@ -56,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                                     maxLines: 2,
                                   ),
                                   CustomText(
-                                    text: 'Error in the code',
+                                    text: taskIndex['description'],
                                     fontSize: 12,
                                     fontWeight: FontWeight.w300,
                                     color: Colors.white,
@@ -84,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: '11 Apr 2025',
+                              text: taskIndex['date'],
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFFD8AFFF),
@@ -92,7 +93,10 @@ class HomeScreen extends StatelessWidget {
                               maxLines: 1,
                             ),
                             CustomText(
-                              text: 'COMPLETED!',
+                              text:
+                                  taskIndex['status'] == 'Completed'
+                                      ? 'COMPLETED!'
+                                      : 'PENDING',
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                               color: Colors.white.withValues(alpha: 0.5),

@@ -68,7 +68,10 @@ class CustomInputField extends StatelessWidget {
       borderSide:
           borderSide != null
               ? borderSide!
-              : const BorderSide(width: 2, color: Color(0xFFE3E3E9)),
+              : BorderSide(
+                width: 2,
+                color: AppColors.primaryColor.withValues(alpha: 0.3),
+              ),
     );
   }
 
