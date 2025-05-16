@@ -80,8 +80,11 @@ class ListItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Color(0xFFA362EA),
-        border: Border.all(color: Color(0xFFA362EA)),
+        color: task['status'] == 'Completed' ? Color(0xFFA362EA) : Colors.white,
+        border: Border.all(
+          color:
+              task['status'] == 'Completed' ? Color(0xFFA362EA) : Colors.grey,
+        ),
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -120,7 +123,10 @@ class TopListItemWidget extends StatelessWidget {
                 text: task['title'],
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.white,
+                color:
+                    task['status'] == 'Completed'
+                        ? Colors.white
+                        : AppColors.darkGrey,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),
@@ -128,7 +134,10 @@ class TopListItemWidget extends StatelessWidget {
                 text: task['description'],
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
-                color: Colors.white,
+                color:
+                    task['status'] == 'Completed'
+                        ? Colors.white
+                        : AppColors.darkGrey,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),
@@ -140,7 +149,11 @@ class TopListItemWidget extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(5),
           ),
-          child: Icon(Icons.check, color: AppColors.primaryColor, size: 20),
+          child: Icon(
+            task['status'] == 'Completed' ? Icons.check : Icons.timer_outlined,
+            color: AppColors.primaryColor,
+            size: 20,
+          ),
         ),
       ],
     );
@@ -161,7 +174,10 @@ class BottomListItemWidget extends StatelessWidget {
           text: task['date'],
           fontSize: 10,
           fontWeight: FontWeight.w500,
-          color: Color(0xFFD8AFFF),
+          color:
+              task['status'] == 'Completed'
+                  ? Color(0xFFD8AFFF)
+                  : AppColors.darkTextColor,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
@@ -169,7 +185,10 @@ class BottomListItemWidget extends StatelessWidget {
           text: task['status'] == 'Completed' ? 'COMPLETED!' : 'PENDING',
           fontSize: 12,
           fontWeight: FontWeight.w600,
-          color: Colors.white.withValues(alpha: 0.5),
+          color:
+              task['status'] == 'Completed'
+                  ? Colors.white.withValues(alpha: 0.5)
+                  : AppColors.darkTextColor,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),

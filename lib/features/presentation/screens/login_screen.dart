@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:task_manager/core/global/custom_button.dart';
-import 'package:task_manager/core/global/custom_inputfield.dart';
-import 'package:task_manager/core/utils/colors/app_colors.dart';
-import 'package:task_manager/core/utils/validator/validator.dart';
-import 'package:task_manager/features/presentation/controllers/login_controller.dart';
+import 'package:task_manager/core/utils/exports/exports.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});

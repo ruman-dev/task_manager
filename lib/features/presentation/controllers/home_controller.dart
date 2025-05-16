@@ -27,7 +27,7 @@ class HomeController extends GetxController {
           builder:
               (_) => AlertDialog(
                 title: Text('Confirm Delete'),
-                content: Text('Are you sure you want to delete "$item"?'),
+                content: Text('Are you sure you want to delete?'),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(false),

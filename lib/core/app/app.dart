@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:task_manager/core/routes/app_route_names.dart';
-import 'package:task_manager/core/routes/app_route_pages.dart';
-import 'package:task_manager/features/presentation/screens/home_screen.dart';
+import 'package:task_manager/core/utils/exports/exports.dart';
 
 class TaskManager extends StatelessWidget {
   const TaskManager({super.key});
@@ -18,9 +13,9 @@ class TaskManager extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-          initialRoute: AppRouteNames().home,
+          initialRoute: AppRouteNames().login,
           getPages: AppRoutePages.appRoutePages(),
-          home: HomeScreen(),
+          home: LoginScreen(),
         );
       },
     );
