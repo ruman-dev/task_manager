@@ -1,16 +1,43 @@
-# task_manager
+# 📋 Task Manager App
 
-A new Flutter project.
+A simple and user-friendly task management mobile application built with **Flutter**, **GetX**, and **Hive**. This app allows users to create, edit, and delete tasks efficiently with a clean UI and persistent local storage.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
 
-A few resources to get you started if this is your first Flutter project:
+- 📝 Create, update, and delete tasks
+- 📦 Local data storage with Hive
+- 📆 Task due date selection
+- 🧠 State management with GetX
+- 🧾 Dropdown for task status (Pending, Completed, etc.)
+- 🧹 Swipe actions for quick edit/delete with confirmation dialogs
+- 📱 Responsive UI using `flutter_screenutil`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📸 Screenshots
+
+| Home Screen | Create Task | Edit Task |
+|-------------|-------------|------------|
+| ![Home](screenshots/home.png) | ![Create](screenshots/create_task.png) | ![Edit](screenshots/edit_task.png) |
+
+---
+
+## 🛠️ Tech Stack
+
+- **Flutter** – UI framework
+- **GetX** – State management & routing
+- **Hive** – Lightweight key-value database
+- **Google Fonts** – Custom typography
+- **flutter_screenutil** – Responsive layout support
+
+---
+
+## 🔧 Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/task_manager.git
+cd task_manager
