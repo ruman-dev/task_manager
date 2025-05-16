@@ -6,7 +6,7 @@ A simple and user-friendly task management mobile application built with **Flutt
 
 ## 🚀 Features
 
-- 📝 Create, update, and delete tasks
+- 📝 Create and delete tasks
 - 📦 Local data storage with Hive
 - 📆 Task due date selection
 - 🧠 State management with GetX
@@ -18,9 +18,13 @@ A simple and user-friendly task management mobile application built with **Flutt
 
 ## 📸 Screenshots
 
-| Home Screen | Create Task | Edit Task |
-|-------------|-------------|------------|
-| ![Home](screenshots/home.png) | ![Create](screenshots/create_task.png) | ![Edit](screenshots/edit_task.png) |
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/e2620cd2-9635-44bf-a392-ad26b5aca38f" width="250" style="margin: 10px;">
+  <img src="https://github.com/user-attachments/assets/a89bfd84-501d-4469-9ffb-af1ccfa83d7b" width="250" style="margin: 10px;">
+  <img src="https://github.com/user-attachments/assets/88c398c8-312c-4601-a39e-4c5cb18ef1f8" width="250" style="margin: 10px;">
+  
+</div>
+
 
 ---
 
