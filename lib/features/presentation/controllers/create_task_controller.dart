@@ -1,14 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:task_manager/core/utils/colors/app_colors.dart';
+import 'package:task_manager/core/utils/exports/exports.dart';
 
 class CreateTaskController extends GetxController {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   String? selectedStatus = '';
-  List<String> furnitureItems = ['Pending', 'Completed'];
+  List<String> statusItems = ['Pending', 'Completed'];
   Rx<DateTime?> selectedDate = Rx<DateTime?>(null);
 
   String get formattedDate {
@@ -56,6 +53,7 @@ class CreateTaskController extends GetxController {
     var box = Hive.box('myTask');
 
     final task = {
+      'id': Random().nextInt(1000),
       'title': titleController.text,
       'description': descriptionController.text,
       'date': formattedDate,
@@ -64,15 +62,21 @@ class CreateTaskController extends GetxController {
 
     box.add(task);
 
+    final homeController = Get.find<HomeController>();
+    homeController.loadTasks();
+
     Get.snackbar(
       'Task Created',
       'Your task has been created successfully',
       backgroundColor: AppColors.primaryColor,
       colorText: Colors.white,
     );
+
     titleController.clear();
     descriptionController.clear();
-    Get.back();
+    selectedStatus = '';
+    selectedDate.value = null;
+
     debugPrint('Task Created: ${box.values.toList()}');
   }
 }

@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:task_manager/core/global/custom_appbar.dart';
-import 'package:task_manager/core/global/custom_text.dart';
-import 'package:task_manager/core/routes/app_route_names.dart';
-import 'package:task_manager/core/utils/colors/app_colors.dart';
-import 'package:task_manager/features/presentation/controllers/home_controller.dart';
+import 'package:task_manager/core/utils/exports/exports.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -20,101 +14,166 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  final taskIndex = _homeController.box.getAt(index);
-                  return Container(
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                    margin: const EdgeInsets.only(bottom: 16),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFA362EA),
-                      border: Border.all(color: Color(0xFFA362EA)),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 5,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    text: taskIndex['title'],
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                  CustomText(
-                                    text: taskIndex['description'],
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.white,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Icon(
-                                Icons.check,
-                                color: AppColors.primaryColor,
-                                size: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              text: taskIndex['date'],
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xFFD8AFFF),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                            CustomText(
-                              text:
-                                  taskIndex['status'] == 'Completed'
-                                      ? 'COMPLETED!'
-                                      : 'PENDING',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white.withValues(alpha: 0.5),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
+              child: Obx(
+                () => ListView.builder(
+                  itemCount: _homeController.taskList.length,
+                  itemBuilder: (context, index) {
+                    final task = _homeController.taskList[index];
+                    final item = task['id'].toString();
+                    return Dismissible(
+                      key: ValueKey(task['id']),
+                      background: Container(
+                        color: Colors.green,
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(left: 20),
+                        child: Icon(Icons.edit, color: Colors.white),
+                      ),
+                      secondaryBackground: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(right: 20),
+                        child: Icon(Icons.delete, color: Colors.white),
+                      ),
+                      confirmDismiss: (direction) async {
+                        if (direction == DismissDirection.startToEnd) {
+                          _homeController.editItem(context, task['title']);
+                          return false;
+                        } else if (direction == DismissDirection.endToStart) {
+                          bool confirm = await _homeController.confirmDelete(
+                            context,
+                            item,
+                          );
+                          return confirm;
+                        }
+                        return false;
+                      },
+                      onDismissed: (direction) {
+                        _homeController.box.deleteAt(index);
+                        _homeController.taskList.removeAt(index);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('${task['title']} deleted')),
+                        );
+                      },
+
+                      child: ListItem(task: task),
+                    );
+                  },
+                ),
               ),
             ),
           ],
         ),
       ),
       floatingActionButton: AddTaskWidget(),
+    );
+  }
+}
+
+class ListItem extends StatelessWidget {
+  const ListItem({super.key, required this.task});
+
+  final dynamic task;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: Color(0xFFA362EA),
+        border: Border.all(color: Color(0xFFA362EA)),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 5,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          TopListItemWidget(task: task),
+          const SizedBox(height: 15),
+          BottomListItemWidget(task: task),
+        ],
+      ),
+    );
+  }
+}
+
+class TopListItemWidget extends StatelessWidget {
+  const TopListItemWidget({super.key, required this.task});
+
+  final dynamic task;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomText(
+                text: task['title'],
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+              CustomText(
+                text: task['description'],
+                fontSize: 12,
+                fontWeight: FontWeight.w300,
+                color: Colors.white,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+            ],
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Icon(Icons.check, color: AppColors.primaryColor, size: 20),
+        ),
+      ],
+    );
+  }
+}
+
+class BottomListItemWidget extends StatelessWidget {
+  const BottomListItemWidget({super.key, required this.task});
+
+  final dynamic task;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        CustomText(
+          text: task['date'],
+          fontSize: 10,
+          fontWeight: FontWeight.w500,
+          color: Color(0xFFD8AFFF),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        ),
+        CustomText(
+          text: task['status'] == 'Completed' ? 'COMPLETED!' : 'PENDING',
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: Colors.white.withValues(alpha: 0.5),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        ),
+      ],
     );
   }
 }
