@@ -20,7 +20,9 @@ A simple and user-friendly task management mobile application built with **Flutt
 
 | Home Screen | Create Task | Edit Task |
 |-------------|-------------|------------|
-| ![Home](screenshots/home.png) | ![Create](screenshots/create_task.png) | ![Edit](screenshots/edit_task.png) |
+| ![Screenshot_1747389608](https://github.com/user-attachments/assets/e2620cd2-9635-44bf-a392-ad26b5aca38f)
+ |![Screenshot_1747389611](https://github.com/user-attachments/assets/a89bfd84-501d-4469-9ffb-af1ccfa83d7b)
+
 
 ---
 
